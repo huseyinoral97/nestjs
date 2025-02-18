@@ -5,11 +5,11 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { UserSchema } from "./schemas/user.schema";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { ConfigModule, ConfigService } from "@nestjs/config"; // ConfigModule'ü ekleyin
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // Global olarak ayarlayın
+    ConfigModule.forRoot({ isGlobal: true }),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       inject: [ConfigService],
