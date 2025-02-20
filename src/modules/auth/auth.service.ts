@@ -5,6 +5,7 @@ import { Model } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { AuthDto } from "./dto/auth.dto";
+import { LoginDto } from "./dto/login.dto";
 
 @Injectable()
 export class AuthService {
@@ -17,9 +18,27 @@ export class AuthService {
   getHello(): string {
     return "Hello from AuthService!";
   }
-  signin(): string {
-    return "signin";
+
+  async signin(loginDto: LoginDto): Promise<{ token: string }> {
+    const { email, password } = loginDto;
+
+    const user = await this.userModel.findOne({ email });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const isPasswordValid = bcrypt.compareSync(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
+
+    const token = this.jwtService.sign({ id: user._id });
+
+    return { token };
   }
+
   async signup(authDto: AuthDto): Promise<{ token: string }> {
     const { email, password } = authDto;
 
