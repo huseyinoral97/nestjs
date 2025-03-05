@@ -2,14 +2,14 @@ import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { MongooseModule } from "@nestjs/mongoose";
-import { AuthModule } from "./modules/auth/auth.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      "mongodb+srv://huseyinoral:pBIVSUn75QZ7ASld@cluster0.svxx5.mongodb.net/",
+      "mongodb+srv://oralhuseyin17:huseyinoral1903.@cluster0.xyago.mongodb.net/",
     ),
-    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
